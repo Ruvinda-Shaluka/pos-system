@@ -75,14 +75,17 @@
         box-shadow: none;
     }
 
-    /* Hide desktop profile dropdown on mobile */
-    .navbar-nav .nav-item.dropdown {
-        display: none;
+    /* Ensure mobile logout is visible and properly styled */
+    .mobile-logout-container {
+        display: block !important;
+        margin-top: auto;
+        padding-bottom: 20px;
     }
 
-    /* Show mobile logout button */
-    #mobile-logout-btn {
-        display: block !important;
+    .logout-sidebar-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -107,7 +110,7 @@
     }
 
     /* Hide mobile logout button on tablet/desktop */
-    #mobile-logout-btn {
+    .mobile-logout-container {
         display: none !important;
     }
 }
@@ -130,7 +133,7 @@
     }
 
     /* Hide mobile logout button on desktop */
-    #mobile-logout-btn {
+    .mobile-logout-container {
         display: none !important;
     }
 

@@ -154,12 +154,17 @@ class AuthController {
 
             this.showDashboard();
         } else {
-            alert('Invalid username or password!');
+            alert('Invalid username or password! Please use:\nUsername: ruvinda\nPassword: ruvinda1234');
         }
     }
 
     handleLogout(e) {
         e.preventDefault();
+
+        // Close mobile sidebar if open
+        if (window.mobileSidebar && window.mobileSidebar.isSidebarVisible()) {
+            window.mobileSidebar.hideSidebar();
+        }
 
         // Clear login state
         localStorage.removeItem('isLoggedIn');
@@ -214,6 +219,9 @@ class POSApplication {
         this.mobileSidebar = new MobileSidebar();
         this.sectionController = new SectionController();
         this.authController = new AuthController();
+
+        // Make mobileSidebar globally accessible for logout
+        window.mobileSidebar = this.mobileSidebar;
 
         // Add window resize handler
         window.addEventListener('resize', () => this.handleResize());

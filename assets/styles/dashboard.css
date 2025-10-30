@@ -13,16 +13,6 @@
     margin-right: 1rem;
 }
 
-/* Mobile logout button */
-#mobile-logout-btn {
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-#mobile-logout-btn:hover {
-    color: white !important;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
 /* Sidebar */
 .sidebar {
     background-color: var(--primary-color);
@@ -30,6 +20,8 @@
     min-height: calc(100vh - 56px);
     padding-top: 20px;
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar .nav-link {
@@ -53,6 +45,32 @@
     font-size: 1.1rem;
 }
 
+/* Mobile logout button in sidebar */
+.mobile-logout-container {
+    margin-top: auto; /* Push to bottom */
+    padding: 10px 0;
+}
+
+.logout-sidebar-btn {
+    color: rgba(255, 255, 255, 0.8) !important;
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    margin: 10px 15px !important;
+    border-radius: 5px !important;
+}
+
+.logout-sidebar-btn:hover {
+    color: white !important;
+    background-color: rgba(220, 53, 69, 0.2) !important;
+    border-color: rgba(220, 53, 69, 0.5) !important;
+}
+
+.sidebar-divider {
+    margin: 15px 20px;
+    border-color: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
 /* Sidebar mobile enhancements */
 .sidebar-header {
     display: none;
@@ -70,6 +88,11 @@
 
     .nav-link:last-child {
         border-bottom: none;
+    }
+
+    /* Ensure mobile logout is visible */
+    .mobile-logout-container {
+        display: block !important;
     }
 }
 
