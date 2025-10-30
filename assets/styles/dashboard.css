@@ -38,6 +38,26 @@
     font-size: 1.1rem;
 }
 
+/* Sidebar mobile enhancements */
+.sidebar-header {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .sidebar-header {
+        display: flex;
+    }
+
+    .nav-link {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+}
+
 /* Main Content */
 .main-content {
     padding: 20px;
@@ -103,4 +123,27 @@
 .form-control:focus, .form-select:focus {
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Smooth transitions */
+.sidebar, .main-content, .sidebar-overlay {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Improve mobile touch targets */
+.nav-link, .btn {
+    min-height: 44px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+}
+
+/* Mobile-optimized modals */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+    }
 }
