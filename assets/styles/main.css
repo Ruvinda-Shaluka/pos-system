@@ -69,6 +69,24 @@ body {
     background-color: rgba(0, 0, 0, 0.03);
 }
 
+/* Action buttons in tables */
+.action-column {
+    width: 120px;
+    min-width: 120px;
+}
+
+.btn-group-action {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-group-action .btn {
+    flex: 0 0 auto;
+    padding: 0.25rem 0.5rem;
+}
+
 /* Badge Styles */
 .badge {
     font-size: 0.75em;

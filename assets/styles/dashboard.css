@@ -8,6 +8,21 @@
     font-size: 1.5rem;
 }
 
+/* Profile dropdown margin for desktop */
+.navbar-nav .nav-item.dropdown {
+    margin-right: 1rem;
+}
+
+/* Mobile logout button */
+#mobile-logout-btn {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+#mobile-logout-btn:hover {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Sidebar */
 .sidebar {
     background-color: var(--primary-color);

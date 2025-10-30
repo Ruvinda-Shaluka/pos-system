@@ -51,10 +51,18 @@
         font-size: 0.875rem;
     }
 
-    /* Make buttons full width on mobile */
-    .btn-mobile-full {
-        width: 100%;
-        margin-bottom: 10px;
+    /* Action buttons on mobile */
+    .action-column {
+        width: 100px;
+        min-width: 100px;
+    }
+
+    .btn-group-action {
+        gap: 3px;
+    }
+
+    .btn-group-action .btn {
+        padding: 0.2rem 0.4rem;
     }
 
     /* Adjust navbar toggler */
@@ -65,6 +73,16 @@
 
     .navbar-toggler:focus {
         box-shadow: none;
+    }
+
+    /* Hide desktop profile dropdown on mobile */
+    .navbar-nav .nav-item.dropdown {
+        display: none;
+    }
+
+    /* Show mobile logout button */
+    #mobile-logout-btn {
+        display: block !important;
     }
 }
 
@@ -87,6 +105,11 @@
         padding-left: 0;
         padding-right: 0;
     }
+
+    /* Hide mobile logout button on tablet/desktop */
+    #mobile-logout-btn {
+        display: none !important;
+    }
 }
 
 /* Desktop styles */
@@ -104,6 +127,17 @@
 
     .navbar-toggler {
         display: none;
+    }
+
+    /* Hide mobile logout button on desktop */
+    #mobile-logout-btn {
+        display: none !important;
+    }
+
+    /* Show desktop profile dropdown */
+    .navbar-nav .nav-item.dropdown {
+        display: block;
+        margin-right: 1.5rem;
     }
 }
 

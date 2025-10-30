@@ -111,7 +111,14 @@ class AuthController {
         this.loginForm = document.getElementById('login-form');
         this.loginSection = document.getElementById('login-section');
         this.dashboardSection = document.getElementById('dashboard-section');
-        this.logoutBtn = document.getElementById('logout-btn');
+        this.desktopLogoutBtn = document.getElementById('desktop-logout-btn');
+        this.mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+        this.usernameDisplay = document.getElementById('username-display');
+
+        this.validCredentials = {
+            username: 'ruvinda',
+            password: 'ruvinda1234'
+        };
 
         this.init();
     }
@@ -121,8 +128,12 @@ class AuthController {
             this.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
         }
 
-        if (this.logoutBtn) {
-            this.logoutBtn.addEventListener('click', (e) => this.handleLogout(e));
+        if (this.desktopLogoutBtn) {
+            this.desktopLogoutBtn.addEventListener('click', (e) => this.handleLogout(e));
+        }
+
+        if (this.mobileLogoutBtn) {
+            this.mobileLogoutBtn.addEventListener('click', (e) => this.handleLogout(e));
         }
 
         // Check if user is already logged in (from localStorage)
@@ -135,15 +146,15 @@ class AuthController {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        // Simple validation - in real app, you'd check against database
-        if (username && password) {
+        // Validate credentials
+        if (username === this.validCredentials.username && password === this.validCredentials.password) {
             // Store login state
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('username', username);
 
             this.showDashboard();
         } else {
-            alert('Please enter both username and password');
+            alert('Invalid username or password!');
         }
     }
 
@@ -173,11 +184,8 @@ class AuthController {
 
         // Update username in navbar if available
         const username = localStorage.getItem('username');
-        if (username) {
-            const usernameElement = document.querySelector('.navbar .nav-link.dropdown-toggle');
-            if (usernameElement) {
-                usernameElement.innerHTML = `<i class="bi bi-person-circle me-1"></i> ${username}`;
-            }
+        if (username && this.usernameDisplay) {
+            this.usernameDisplay.textContent = username;
         }
     }
 
@@ -236,5 +244,17 @@ function deleteCustomer(customerId) {
     if (confirm('Are you sure you want to delete this customer?')) {
         console.log('Delete customer:', customerId);
         // Implementation for deleting customer
+    }
+}
+
+function editItem(itemId) {
+    console.log('Edit item:', itemId);
+    // Implementation for editing item
+}
+
+function deleteItem(itemId) {
+    if (confirm('Are you sure you want to delete this item?')) {
+        console.log('Delete item:', itemId);
+        // Implementation for deleting item
     }
 }
