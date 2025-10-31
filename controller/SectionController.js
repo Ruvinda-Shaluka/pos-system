@@ -1,36 +1,34 @@
 export class SectionController {
     constructor() {
-        this.navLinks = document.querySelectorAll('.sidebar .nav-link');
-        this.contentSections = document.querySelectorAll('.content-section');
+        this.$navLinks = $('.sidebar .nav-link');
+        this.$contentSections = $('.content-section');
         this.init();
     }
 
     init() {
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.showSection(link.getAttribute('data-section'));
-            });
+        this.$navLinks.on('click', (e) => {
+            e.preventDefault();
+            this.showSection($(e.currentTarget).data('section'));
         });
     }
 
     showSection(sectionName) {
         // Remove active class from all links
-        this.navLinks.forEach(link => link.classList.remove('active'));
+        this.$navLinks.removeClass('active');
 
         // Add active class to clicked link
-        const activeLink = document.querySelector(`[data-section="${sectionName}"]`);
-        if (activeLink) {
-            activeLink.classList.add('active');
+        const $activeLink = $(`[data-section="${sectionName}"]`);
+        if ($activeLink.length) {
+            $activeLink.addClass('active');
         }
 
         // Hide all content sections
-        this.contentSections.forEach(section => section.classList.add('d-none'));
+        this.$contentSections.addClass('d-none');
 
         // Show the selected content section
-        const targetSection = document.getElementById(`${sectionName}-content`);
-        if (targetSection) {
-            targetSection.classList.remove('d-none');
+        const $targetSection = $(`#${sectionName}-content`);
+        if ($targetSection.length) {
+            $targetSection.removeClass('d-none');
         }
     }
 }
