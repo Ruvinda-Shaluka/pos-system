@@ -22,7 +22,7 @@ const get_customer_detail = (index) => {
 }
 
 // ============== Update Customer ==================
-const update_customer_complete = (customer_id, name, email, phone, address) => {
+const update_customer = (customer_id, name, email, phone, address) => {
     const customer_index = customers_db.findIndex(customer => customer.customer_id === customer_id);
 
     if (customer_index !== -1) {
@@ -33,4 +33,4 @@ const update_customer_complete = (customer_id, name, email, phone, address) => {
     return false;
 }
 
-export {add_customer, delete_customer, get_customers, get_customer_detail, update_customer_complete};
+export {add_customer, delete_customer, get_customers, get_customer_detail, update_customer};
