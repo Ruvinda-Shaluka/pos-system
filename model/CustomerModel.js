@@ -11,6 +11,7 @@ const add_customer = (customer_id,name, email, phone, address) => {
 const delete_customer = (index) => {
     customers_db.splice(index, 1);
 }
+
 // =============== Get Customers ===================
 const get_customers = () => {
     return customers_db;

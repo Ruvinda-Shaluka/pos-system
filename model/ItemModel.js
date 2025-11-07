@@ -11,6 +11,7 @@ const add_item = (item_code, name, category, price, stock) => {
 const delete_item = (index) => {
     items_db.splice(index, 1);
 }
+
 // =============== Get Items ===================
 const get_items = () => {
     return items_db;
