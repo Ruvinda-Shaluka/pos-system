@@ -1,12 +1,11 @@
 class ItemDTO {
-    constructor(item_code, name, category,price, stock) {
+    constructor(item_code, name, category, price, stock) {
         this._item_code = item_code;
         this._name = name;
         this._category = category;
         this._price = price;
         this._stock = stock;
     }
-
 
     get item_code() {
         return this._item_code;
@@ -47,4 +46,16 @@ class ItemDTO {
     set stock(value) {
         this._stock = value;
     }
+
+    toObject() {
+        return {
+            item_code: this._item_code,
+            name: this._name,
+            category: this._category,
+            price: this._price,
+            stock: this._stock
+        };
+    }
 }
+
+export default ItemDTO;

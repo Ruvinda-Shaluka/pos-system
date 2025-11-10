@@ -1,10 +1,11 @@
 class OrderDTO {
-    constructor(order_id, customer_name, order_date, item_qty, total_amount) {
+    constructor(order_id, customer_id, items, total, date, status = 'Pending') {
         this._order_id = order_id;
-        this._customer_name = customer_name;
-        this._order_date = order_date;
-        this._item_qty = item_qty;
-        this._total_amount = total_amount;
+        this._customer_id = customer_id;
+        this._items = items; // Array of {item_code, quantity, price}
+        this._total = total;
+        this._date = date;
+        this._status = status;
     }
 
     get order_id() {
@@ -15,36 +16,56 @@ class OrderDTO {
         this._order_id = value;
     }
 
-    get customer_name() {
-        return this._customer_name;
+    get customer_id() {
+        return this._customer_id;
     }
 
-    set customer_name(value) {
-        this._customer_name = value;
+    set customer_id(value) {
+        this._customer_id = value;
     }
 
-    get order_date() {
-        return this._order_date;
+    get items() {
+        return this._items;
     }
 
-    set order_date(value) {
-        this._order_date = value;
+    set items(value) {
+        this._items = value;
     }
 
-    get item_qty() {
-        return this._item_qty;
+    get total() {
+        return this._total;
     }
 
-    set item_qty(value) {
-        this._item_qty = value;
+    set total(value) {
+        this._total = value;
     }
 
-    get total_amount() {
-        return this._total_amount;
+    get date() {
+        return this._date;
     }
 
-    set total_amount(value) {
-        this._total_amount = value;
+    set date(value) {
+        this._date = value;
     }
 
+    get status() {
+        return this._status;
+    }
+
+    set status(value) {
+        this._status = value;
+    }
+
+    toObject() {
+        return {
+            order_id: this._order_id,
+            customer_id: this._customer_id,
+            items: this._items,
+            total: this._total,
+            date: this._date,
+            status: this._status
+        };
+    }
 }
+
+export default OrderDTO;

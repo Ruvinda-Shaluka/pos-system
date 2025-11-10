@@ -1,50 +1,38 @@
 export class AuthController {
     constructor() {
-        // Hardcoded valid credentials (you can later import from DB.js)
         this.validCredentials = {
             username: "ruvinda",
             password: "ruvinda1234"
         };
-
         this.init();
     }
 
-    // ==================== Initialize ====================
     init() {
-        // Bind login form submit
-        $("#login-form").on("submit", (e) => this.handleLogin(e));
+        console.log("AuthController: Initializing...");
 
-        // Bind logout buttons (desktop + mobile)
-        $("#desktop-logout-btn, #mobile-logout-btn").on("click", (e) =>
-            this.handleLogout(e)
-        );
+        // Use event delegation for dynamic elements
+        $(document)
+            .on("submit", "#login-form", (e) => this.handleLogin(e))
+            .on("click", "#desktop-logout-btn, #mobile-logout-btn", (e) => this.handleLogout(e));
 
-        // Check login state
         this.checkAuthStatus();
     }
 
-    // ==================== Handle Login ====================
     handleLogin(e) {
         e.preventDefault();
+        console.log("AuthController: Login attempt");
 
         const username = $("#username").val().trim();
         const password = $("#password").val().trim();
 
-        // Validate inputs
         if (!username || !password) {
             Swal.fire("Error", "Please enter both username and password!", "error");
             return;
         }
 
-        // Validate credentials
-        if (
-            username === this.validCredentials.username &&
-            password === this.validCredentials.password
-        ) {
-            // Save to localStorage
+        if (username === this.validCredentials.username && password === this.validCredentials.password) {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("username", username);
-
             this.showDashboard();
 
             Swal.fire({
@@ -55,27 +43,19 @@ export class AuthController {
                 showConfirmButton: false,
             });
         } else {
-            Swal.fire(
-                "Invalid Credentials",
-                "Please Re check your username and password.",
-                "error"
-            );
+            Swal.fire("Invalid Credentials", "Please re-check your username and password.", "error");
         }
     }
 
-    // ==================== Handle Logout ====================
     handleLogout(e) {
         e.preventDefault();
 
-        // Close sidebar if open
-        if (window.mobileSidebar && window.mobileSidebar.isSidebarVisible()) {
+        if (window.mobileSidebar) {
             window.mobileSidebar.hideSidebar();
         }
 
-        // Clear session
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("username");
-
         this.showLogin();
 
         Swal.fire({
@@ -87,32 +67,28 @@ export class AuthController {
         });
     }
 
-    // ==================== Check Auth State ====================
     checkAuthStatus() {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
-        if (isLoggedIn) {
+        if (isLoggedIn === "true") {
             this.showDashboard();
         } else {
             this.showLogin();
         }
     }
 
-    // ==================== Show Dashboard ====================
     showDashboard() {
         $("#login-section").addClass("d-none");
         $("#dashboard-section").removeClass("d-none");
 
-        // Update username in navbar
         const username = localStorage.getItem("username");
         if (username) {
             $("#username-display").text(username);
         }
     }
 
-    // ==================== Show Login ====================
     showLogin() {
         $("#dashboard-section").addClass("d-none");
         $("#login-section").removeClass("d-none");
-        $("#login-form")[0].reset();
+        $("#login-form").trigger("reset");
     }
 }

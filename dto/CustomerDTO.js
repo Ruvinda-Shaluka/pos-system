@@ -7,7 +7,6 @@ class CustomerDTO {
         this._address = address;
     }
 
-
     get customer_id() {
         return this._customer_id;
     }
@@ -47,4 +46,16 @@ class CustomerDTO {
     set address(value) {
         this._address = value;
     }
+
+    toObject() {
+        return {
+            customer_id: this._customer_id,
+            name: this._name,
+            email: this._email,
+            phone: this._phone,
+            address: this._address
+        };
+    }
 }
+
+export default CustomerDTO;

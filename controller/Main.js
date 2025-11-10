@@ -1,6 +1,10 @@
 import { POSApplication } from './POSApplication.js';
 
-// Initialize the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    new POSApplication();
+
+$(document).ready(function() {
+    try {
+        new POSApplication();
+    } catch (error) {
+        console.error("Main.js: Error initializing POS Application:", error);
+    }
 });
