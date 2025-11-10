@@ -1,73 +1,76 @@
 export class MobileSidebar {
     constructor() {
-        this.sidebar = document.getElementById('sidebar');
-        this.sidebarOverlay = document.getElementById('sidebarOverlay');
-        this.sidebarToggle = document.getElementById('sidebarToggle');
-        this.sidebarClose = document.getElementById('sidebarClose');
-        this.mainContent = document.getElementById('mainContent');
+        // Cache all required DOM elements
+        this.$sidebar = $("#sidebar");
+        this.$sidebarOverlay = $("#sidebarOverlay");
+        this.$sidebarToggle = $("#sidebarToggle");
+        this.$sidebarClose = $("#sidebarClose");
+        this.$mainContent = $("#mainContent");
 
         this.init();
     }
 
+    // ==================== Initialize Listeners ====================
     init() {
+        const self = this;
+
         // Toggle sidebar when hamburger menu is clicked
-        if (this.sidebarToggle) {
-            this.sidebarToggle.addEventListener('click', () => {
-                this.toggleSidebar();
-            });
-        }
-
-        // Close sidebar when X button is clicked
-        if (this.sidebarClose) {
-            this.sidebarClose.addEventListener('click', () => {
-                this.hideSidebar();
-            });
-        }
-
-        // Close sidebar when overlay is clicked
-        if (this.sidebarOverlay) {
-            this.sidebarOverlay.addEventListener('click', () => {
-                this.hideSidebar();
-            });
-        }
-
-        // Close sidebar when a nav link is clicked (on mobile)
-        const navLinks = document.querySelectorAll('.sidebar .nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    this.hideSidebar();
-                }
-            });
+        this.$sidebarToggle.on("click", function () {
+            self.toggleSidebar();
         });
 
-        // Close sidebar when window is resized to desktop size
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                this.hideSidebar();
+        // Close sidebar when X button is clicked
+        this.$sidebarClose.on("click", function () {
+            self.hideSidebar();
+        });
+
+        // Close sidebar when overlay is clicked
+        this.$sidebarOverlay.on("click", function () {
+            self.hideSidebar();
+        });
+
+        // Close sidebar when a sidebar nav link is clicked (mobile only)
+        $(".sidebar .nav-link").on("click", function () {
+            if ($(window).width() <= 768) {
+                self.hideSidebar();
+            }
+        });
+
+        // Auto-close sidebar when resized to desktop
+        $(window).on("resize", function () {
+            if ($(window).width() > 768) {
+                self.hideSidebar();
             }
         });
     }
 
+    // ==================== Toggle Sidebar ====================
     toggleSidebar() {
-        this.sidebar.classList.toggle('show');
-        this.sidebarOverlay.classList.toggle('show');
-        document.body.style.overflow = this.sidebar.classList.contains('show') ? 'hidden' : '';
+        this.$sidebar.toggleClass("show");
+        this.$sidebarOverlay.toggleClass("show");
+
+        $("body").css(
+            "overflow",
+            this.$sidebar.hasClass("show") ? "hidden" : ""
+        );
     }
 
+    // ==================== Show Sidebar ====================
     showSidebar() {
-        this.sidebar.classList.add('show');
-        this.sidebarOverlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
+        this.$sidebar.addClass("show");
+        this.$sidebarOverlay.addClass("show");
+        $("body").css("overflow", "hidden");
     }
 
+    // ==================== Hide Sidebar ====================
     hideSidebar() {
-        this.sidebar.classList.remove('show');
-        this.sidebarOverlay.classList.remove('show');
-        document.body.style.overflow = '';
+        this.$sidebar.removeClass("show");
+        this.$sidebarOverlay.removeClass("show");
+        $("body").css("overflow", "");
     }
 
+    // ==================== Check Sidebar Visibility ====================
     isSidebarVisible() {
-        return this.sidebar.classList.contains('show');
+        return this.$sidebar.hasClass("show");
     }
 }

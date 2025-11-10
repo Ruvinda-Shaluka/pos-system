@@ -1,6 +1,6 @@
-import { MobileSidebar } from './MobileSidebar.js';
-import { SectionController } from './SectionController.js';
-import { AuthController } from './AuthController.js';
+import { MobileSidebar } from "./MobileSidebar.js";
+import { SectionController } from "./SectionController.js";
+import { AuthController } from "./AuthController.js";
 
 export class POSApplication {
     constructor() {
@@ -19,15 +19,15 @@ export class POSApplication {
         // Make mobileSidebar globally accessible for logout
         window.mobileSidebar = this.mobileSidebar;
 
-        // Add window resize handler
-        window.addEventListener('resize', () => this.handleResize());
+        // Handle screen resizing
+        $(window).on("resize", () => this.handleResize());
 
-        console.log('POS System initialized successfully');
+        console.log("POS System initialized successfully");
     }
 
     handleResize() {
-        // Auto-close sidebar when switching to desktop
-        if (window.innerWidth > 768 && this.mobileSidebar.isSidebarVisible()) {
+        // Auto-close sidebar when switching to desktop view
+        if ($(window).width() > 768 && this.mobileSidebar.isSidebarVisible()) {
             this.mobileSidebar.hideSidebar();
         }
     }
