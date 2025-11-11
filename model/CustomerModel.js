@@ -1,4 +1,3 @@
-// model/CustomerModel.js
 import {customers_db} from "../db/DB.js";
 import CustomerDTO from "../dto/CustomerDTO.js";
 

@@ -1,4 +1,3 @@
-// controller/CustomerManagement.js
 import {
     add_customer,
     delete_customer,
@@ -7,8 +6,7 @@ import {
     update_customer
 } from "../model/CustomerModel.js";
 
-let selected_row = null;
-let selected_customer_id = null;
+let selected_customer_row = null;
 let initialized = false;
 
 // ==================== Load Customer Table =======================
@@ -43,10 +41,10 @@ const load_customer_table = () => {
             <td>${obj.address}</td>
             <td class="action-column">
                 <div class="btn-group-action">
-                    <button class="btn btn-sm btn-outline-primary me-1 edit-btn" data-index="${index}">
+                    <button class="btn btn-sm btn-outline-primary me-1 customer-edit-btn" data-index="${index}">
                         <i class="bi bi-pencil"></i>
                     </button>
-                    <button class="btn btn-sm btn-outline-danger delete-btn" data-index="${index}">
+                    <button class="btn btn-sm btn-outline-danger customer-delete-btn" data-index="${index}">
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
@@ -83,7 +81,7 @@ const handleAddCustomer = () => {
 
 // ==================== Update Customer =======================
 const handleUpdateCustomer = () => {
-    if (selected_row === null) {
+    if (selected_customer_row === null) {
         Swal.fire("Warning", "Please select a customer to update", "warning");
         return;
     }
@@ -99,7 +97,7 @@ const handleUpdateCustomer = () => {
     }
 
     // Get customer data to preserve the ID
-    const customer_obj = get_customer_detail(selected_row);
+    const customer_obj = get_customer_detail(selected_customer_row);
     if (!customer_obj) {
         Swal.fire("Error", "Customer not found!", "error");
         return;
@@ -107,17 +105,16 @@ const handleUpdateCustomer = () => {
 
     const customer_id = customer_obj.customer_id;
 
-    console.log("Updating customer - Index:", selected_row, "ID:", customer_id);
+    console.log("Updating customer - Index:", selected_customer_row, "ID:", customer_id);
 
     // Update the customer
-    const result = update_customer(selected_row, customer_id, name, email, phone, address);
+    const result = update_customer(selected_customer_row, customer_id, name, email, phone, address);
 
     if (result) {
         load_customer_table();
         $("#addCustomerModal").modal("hide");
         $("#addCustomerForm").trigger("reset");
-        selected_row = null;
-        selected_customer_id = null;
+        selected_customer_row = null;
         Swal.fire("Updated!", "Customer updated successfully.", "success");
     } else {
         Swal.fire("Error!", "Failed to update customer.", "error");
@@ -138,8 +135,7 @@ const handleDeleteCustomer = (index) => {
         if (result.isConfirmed) {
             delete_customer(index);
             load_customer_table();
-            selected_row = null;
-            selected_customer_id = null;
+            selected_customer_row = null;
             Swal.fire("Deleted!", "Customer record removed.", "success");
         }
     });
@@ -147,10 +143,10 @@ const handleDeleteCustomer = (index) => {
 
 // ==================== Edit Customer =======================
 const handleEditCustomer = (index) => {
-    console.log("Edit button clicked for index:", index);
+    console.log("Edit customer button clicked for index:", index);
 
-    selected_row = index;
-    const customer_obj = get_customer_detail(selected_row);
+    selected_customer_row = index;
+    const customer_obj = get_customer_detail(selected_customer_row);
 
     console.log("Customer object:", customer_obj);
 
@@ -168,7 +164,7 @@ const handleEditCustomer = (index) => {
         // Show the modal
         $("#addCustomerModal").modal("show");
 
-        console.log("Form filled with customer data");
+        console.log("Customer form filled with customer data");
     } else {
         console.error("Customer not found at index:", index);
         Swal.fire("Error", "Customer not found!", "error");
@@ -190,44 +186,44 @@ const initializeCustomerManagement = () => {
     // Add Customer Button Click - Reset to add mode
     $(document).on("click", "[data-bs-target='#addCustomerModal']", function() {
         console.log("Add customer button clicked");
-        selected_row = null;
+        selected_customer_row = null;
         $("#addCustomerForm").trigger("reset");
         $("#addCustomerModal .modal-title").text("Add New Customer");
         $("#addCustomerModal .btn-primary").text("Save Customer");
     });
 
-    // Save/Update Button in Modal
-    $(document).on("click", "#addCustomerModal .btn-primary", function() {
-        console.log("Save/Update button clicked, selected_row:", selected_row);
-        if (selected_row === null) {
+    // Save/Update Button in Modal - SPECIFIC to customer modal
+    $("#addCustomerModal .btn-primary").off("click").on("click", function() {
+        console.log("Customer Save/Update button clicked, selected_customer_row:", selected_customer_row);
+        if (selected_customer_row === null) {
             handleAddCustomer();
         } else {
             handleUpdateCustomer();
         }
     });
 
-    // Edit Button - Use event delegation
-    $(document).on("click", ".edit-btn", function(e) {
+    // Edit Customer Button - SPECIFIC to customer table
+    $(document).off("click", ".customer-edit-btn").on("click", ".customer-edit-btn", function(e) {
         e.preventDefault();
         e.stopPropagation();
 
         const index = $(this).data("index");
-        console.log("Edit button clicked, index:", index);
+        console.log("Customer edit button clicked, index:", index);
 
         if (index !== undefined && index !== null) {
             handleEditCustomer(index);
         } else {
-            console.error("No index found on edit button");
+            console.error("No index found on customer edit button");
         }
     });
 
-    // Delete Button
-    $(document).on("click", ".delete-btn", function(e) {
+    // Delete Customer Button - SPECIFIC to customer table
+    $(document).off("click", ".customer-delete-btn").on("click", ".customer-delete-btn", function(e) {
         e.preventDefault();
         e.stopPropagation();
 
         const index = $(this).data("index");
-        console.log("Delete button clicked, index:", index);
+        console.log("Customer delete button clicked, index:", index);
 
         if (index !== undefined && index !== null) {
             handleDeleteCustomer(index);
@@ -236,8 +232,8 @@ const initializeCustomerManagement = () => {
 
     // Reset modal when hidden
     $("#addCustomerModal").on("hidden.bs.modal", function() {
-        console.log("Modal hidden, resetting form");
-        selected_row = null;
+        console.log("Customer modal hidden, resetting form");
+        selected_customer_row = null;
         $("#addCustomerForm").trigger("reset");
         $("#addCustomerModal .modal-title").text("Add New Customer");
         $("#addCustomerModal .btn-primary").text("Save Customer");

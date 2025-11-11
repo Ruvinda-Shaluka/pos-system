@@ -2,6 +2,7 @@ import { MobileSideBar } from "./MobileSideBar.js";
 import { SectionController } from "./SectionController.js";
 import { AuthController } from "./AuthController.js";
 import { initializeCustomerManagement } from "./CustomerManagement.js";
+import { initializeItemManagement } from "./ItemManagement.js";
 
 export class POSApplication {
     constructor() {
@@ -43,6 +44,11 @@ export class POSApplication {
                 setTimeout(() => {
                     initializeCustomerManagement();
                 }, 100);
+            } else if (section === 'item-management') {
+                console.log("Item management section activated");
+                setTimeout(() => {
+                    initializeItemManagement();
+                }, 100);
             }
         });
 
@@ -54,6 +60,11 @@ export class POSApplication {
                 setTimeout(() => {
                     initializeCustomerManagement();
                 }, 100);
+            } else if (section === 'item-management') {
+                console.log("Item management link clicked");
+                setTimeout(() => {
+                    initializeItemManagement();
+                }, 100);
             }
         });
 
@@ -62,6 +73,14 @@ export class POSApplication {
             console.log("Already on customer management page, initializing...");
             setTimeout(() => {
                 initializeCustomerManagement();
+            }, 100);
+        }
+
+        // Initialize if already on item management page
+        if ($('#item-management-content').is(':visible')) {
+            console.log("Already on item management page, initializing...");
+            setTimeout(() => {
+                initializeItemManagement();
             }, 100);
         }
     }
