@@ -4,18 +4,21 @@ export class SectionController {
     }
 
     init() {
-        console.log("SectionController: Initializing...");
-
         // Use event delegation for sidebar links
         $(document).on('click', '.sidebar .nav-link', (e) => {
             e.preventDefault();
             const section = $(e.currentTarget).data('section');
             this.showSection(section);
+
+            // Trigger custom event for section change
+            $(document).trigger('sectionChanged', [section]);
         });
+
+        // Show dashboard by default
+        this.showSection('dashboard');
     }
 
     showSection(sectionName) {
-
         // Remove active class from all links
         $('.sidebar .nav-link').removeClass('active');
 
