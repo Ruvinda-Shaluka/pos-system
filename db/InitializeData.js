@@ -1,4 +1,3 @@
-// db/InitializeData.js
 import { customers_db, items_db, orders_db } from './DB.js';
 import CustomerDTO from '../dto/CustomerDTO.js';
 import ItemDTO from '../dto/ItemDTO.js';
